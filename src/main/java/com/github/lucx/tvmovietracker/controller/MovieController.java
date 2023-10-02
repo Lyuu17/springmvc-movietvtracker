@@ -4,6 +4,7 @@ import com.github.lucx.tvmovietracker.tmdb.TMDBMovieResult;
 import com.github.lucx.tvmovietracker.tmdb.TMDBPageResult;
 import com.github.lucx.tvmovietracker.tmdb.TMDBService;
 import jakarta.annotation.Resource;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,6 +23,7 @@ public class MovieController {
     private TMDBService tmdbService;
 
     @GetMapping("/popular")
+    @Cacheable("popularMovies")
     public ResponseEntity<?> popularMovies(@Query("language") String language, @Query("page") Integer page) {
 
         try {
