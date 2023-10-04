@@ -6,6 +6,10 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
+
 @RestController()
 @RequestMapping("api/v1/movie")
 public class MovieController {
@@ -15,10 +19,18 @@ public class MovieController {
 
     @GetMapping("/now_playing")
     @Cacheable("nowPlaying")
-    public ResponseEntity<?> nowPlaying(@RequestParam("language") String language, @RequestParam("page") Integer page) {
+    public ResponseEntity<?> nowPlaying(@RequestParam("language") Optional<String> language,
+                                        @RequestParam("page") Optional<Integer> page,
+                                        @RequestParam("region") Optional<String> region) {
+
+        Map<String, String> options = new HashMap<>();
+
+        language.ifPresent((v) -> options.put("language", v));
+        page.ifPresent((v) -> options.put("page", v.toString()));
+        region.ifPresent((v) -> options.put("region", v));
 
         try {
-            TMDBPageWithDatesResult<TMDBMovieResult> pageWithDatesResult = tmdbService.movieNowPlaying(language, page);
+            TMDBPageWithDatesResult<TMDBMovieResult> pageWithDatesResult = tmdbService.movieNowPlaying(options);
 
             return ResponseEntity.ok(pageWithDatesResult);
         } catch (Exception e) {
@@ -28,10 +40,18 @@ public class MovieController {
 
     @GetMapping("/popular")
     @Cacheable("popular")
-    public ResponseEntity<?> popular(@RequestParam("language") String language, @RequestParam("page") Integer page) {
+    public ResponseEntity<?> popular(@RequestParam("language") Optional<String> language,
+                                     @RequestParam("page") Optional<Integer> page,
+                                     @RequestParam("region") Optional<String> region) {
+
+        Map<String, String> options = new HashMap<>();
+
+        language.ifPresent((v) -> options.put("language", v));
+        page.ifPresent((v) -> options.put("page", v.toString()));
+        region.ifPresent((v) -> options.put("region", v));
 
         try {
-            TMDBPageResult<TMDBMovieResult> pageResult = tmdbService.moviePopular(language, page);
+            TMDBPageResult<TMDBMovieResult> pageResult = tmdbService.moviePopular(options);
 
             return ResponseEntity.ok(pageResult);
         } catch (Exception e) {
@@ -41,10 +61,18 @@ public class MovieController {
 
     @GetMapping("/top_rated")
     @Cacheable("topRated")
-    public ResponseEntity<?> topRated(@RequestParam("language") String language, @RequestParam("page") Integer page) {
+    public ResponseEntity<?> topRated(@RequestParam("language") Optional<String> language,
+                                      @RequestParam("page") Optional<Integer> page,
+                                      @RequestParam("region") Optional<String> region) {
+
+        Map<String, String> options = new HashMap<>();
+
+        language.ifPresent((v) -> options.put("language", v));
+        page.ifPresent((v) -> options.put("page", v.toString()));
+        region.ifPresent((v) -> options.put("region", v));
 
         try {
-            TMDBPageResult<TMDBMovieResult> pageResult = tmdbService.movieTopRated(language, page);
+            TMDBPageResult<TMDBMovieResult> pageResult = tmdbService.movieTopRated(options);
 
             return ResponseEntity.ok(pageResult);
         } catch (Exception e) {
@@ -54,10 +82,18 @@ public class MovieController {
 
     @GetMapping("/upcoming")
     @Cacheable("upcoming")
-    public ResponseEntity<?> upcoming(@RequestParam("language") String language, @RequestParam("page") Integer page) {
+    public ResponseEntity<?> upcoming(@RequestParam("language") Optional<String> language,
+                                      @RequestParam("page") Optional<Integer> page,
+                                      @RequestParam("region") Optional<String> region) {
+
+        Map<String, String> options = new HashMap<>();
+
+        language.ifPresent((v) -> options.put("language", v));
+        page.ifPresent((v) -> options.put("page", v.toString()));
+        region.ifPresent((v) -> options.put("region", v));
 
         try {
-            TMDBPageResult<TMDBMovieResult> pageResult = tmdbService.movieUpcoming(language, page);
+            TMDBPageResult<TMDBMovieResult> pageResult = tmdbService.movieUpcoming(options);
 
             return ResponseEntity.ok(pageResult);
         } catch (Exception e) {

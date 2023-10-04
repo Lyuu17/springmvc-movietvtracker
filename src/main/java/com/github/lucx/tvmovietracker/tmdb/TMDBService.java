@@ -11,20 +11,20 @@ import java.util.Map;
 public interface TMDBService {
 
     /**
-     * MOVIE DETAILS
+     * MOVIE LISTS
      */
 
     @GetMapping("movie/now_playing")
-    TMDBPageWithDatesResult<TMDBMovieResult> movieNowPlaying(@RequestParam("language") String language, @RequestParam("page") int page);
+    TMDBPageWithDatesResult<TMDBMovieResult> movieNowPlaying(@RequestParam Map<String, String> options);
 
     @GetMapping("movie/popular")
-    TMDBPageResult<TMDBMovieResult> moviePopular(@RequestParam("language") String language, @RequestParam("page") int page);
+    TMDBPageResult<TMDBMovieResult> moviePopular(@RequestParam Map<String, String> options);
 
     @GetMapping("movie/top_rated")
-    TMDBPageResult<TMDBMovieResult> movieTopRated(@RequestParam("language") String language, @RequestParam("page") int page);
+    TMDBPageResult<TMDBMovieResult> movieTopRated(@RequestParam Map<String, String> options);
 
     @GetMapping("movie/upcoming")
-    TMDBPageResult<TMDBMovieResult> movieUpcoming(@RequestParam("language") String language, @RequestParam("page") int page);
+    TMDBPageResult<TMDBMovieResult> movieUpcoming(@RequestParam Map<String, String> options);
 
     /**
      * MOVIES

@@ -32,16 +32,16 @@ public class SearchController {
                                          @RequestParam("region") Optional<String> region,
                                          @RequestParam("year") Optional<String> year) {
 
-        try {
-            Map<String, String> options = new HashMap<>();
+        Map<String, String> options = new HashMap<>();
 
-            includeAdult.ifPresent((v) -> options.put("include_adult", v.toString()));
-            language.ifPresent((v) -> options.put("language", v));
-            primaryReleaseYear.ifPresent((v) -> options.put("primary_release_year", v));
-            page.ifPresent((v) -> options.put("page", v.toString()));
-            region.ifPresent((v) -> options.put("region", v));
-            year.ifPresent((v) -> options.put("year", v));
-            
+        includeAdult.ifPresent((v) -> options.put("include_adult", v.toString()));
+        language.ifPresent((v) -> options.put("language", v));
+        primaryReleaseYear.ifPresent((v) -> options.put("primary_release_year", v));
+        page.ifPresent((v) -> options.put("page", v.toString()));
+        region.ifPresent((v) -> options.put("region", v));
+        year.ifPresent((v) -> options.put("year", v));
+
+        try {
             TMDBPageResult<TMDBMovieResult> pageResult = tmdbService.movieSearch(query, options);
 
             return ResponseEntity.ok(pageResult);
