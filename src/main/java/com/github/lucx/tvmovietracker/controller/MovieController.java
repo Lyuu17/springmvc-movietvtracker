@@ -1,16 +1,10 @@
 package com.github.lucx.tvmovietracker.controller;
 
-import com.github.lucx.tvmovietracker.tmdb.TMDBMovieResult;
-import com.github.lucx.tvmovietracker.tmdb.TMDBPageResult;
-import com.github.lucx.tvmovietracker.tmdb.TMDBPageWithDatesResult;
-import com.github.lucx.tvmovietracker.tmdb.TMDBService;
+import com.github.lucx.tvmovietracker.tmdb.*;
 import jakarta.annotation.Resource;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController()
 @RequestMapping("api/v1/movie")
@@ -66,6 +60,19 @@ public class MovieController {
             TMDBPageResult<TMDBMovieResult> pageResult = tmdbService.movieUpcoming(language, page);
 
             return ResponseEntity.ok(pageResult);
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body(e.getMessage());
+        }
+    }
+
+    @GetMapping("/{id}")
+    @Cacheable("details")
+    public ResponseEntity<?> details(@PathVariable("id") Integer id) {
+
+        try {
+            TMDBMovieDetailsResult result = tmdbService.movieDetails(id);
+
+            return ResponseEntity.ok(result);
         } catch (Exception e) {
             return ResponseEntity.internalServerError().body(e.getMessage());
         }
