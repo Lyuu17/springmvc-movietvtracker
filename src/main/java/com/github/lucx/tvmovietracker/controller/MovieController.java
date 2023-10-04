@@ -2,6 +2,7 @@ package com.github.lucx.tvmovietracker.controller;
 
 import com.github.lucx.tvmovietracker.tmdb.TMDBMovieResult;
 import com.github.lucx.tvmovietracker.tmdb.TMDBPageResult;
+import com.github.lucx.tvmovietracker.tmdb.TMDBPageWithDatesResult;
 import com.github.lucx.tvmovietracker.tmdb.TMDBService;
 import jakarta.annotation.Resource;
 import org.springframework.cache.annotation.Cacheable;
@@ -17,6 +18,19 @@ public class MovieController {
 
     @Resource
     private TMDBService tmdbService;
+
+    @GetMapping("/now_playing")
+    @Cacheable("nowPlaying")
+    public ResponseEntity<?> nowPlaying(@RequestParam("language") String language, @RequestParam("page") Integer page) {
+
+        try {
+            TMDBPageWithDatesResult<TMDBMovieResult> pageWithDatesResult = tmdbService.nowPlaying(language, page);
+
+            return ResponseEntity.ok(pageWithDatesResult);
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body(e.getMessage());
+        }
+    }
 
     @GetMapping("/popular")
     @Cacheable("popularMovies")
