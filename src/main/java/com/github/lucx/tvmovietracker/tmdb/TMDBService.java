@@ -12,4 +12,7 @@ public interface TMDBService {
 
     @GetMapping("movie/popular")
     TMDBPageResult<TMDBMovieResult> popularMovies(@RequestParam("language") String language, @RequestParam("page") int page);
+
+    @GetMapping("movie/top_rated")
+    TMDBPageResult<TMDBMovieResult> topRated(@RequestParam("language") String language, @RequestParam("page") int page);
 }

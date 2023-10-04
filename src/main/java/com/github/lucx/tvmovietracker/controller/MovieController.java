@@ -44,4 +44,17 @@ public class MovieController {
             return ResponseEntity.internalServerError().body(e.getMessage());
         }
     }
+
+    @GetMapping("/top_rated")
+    @Cacheable("topRated")
+    public ResponseEntity<?> topRated(@RequestParam("language") String language, @RequestParam("page") Integer page) {
+
+        try {
+            TMDBPageResult<TMDBMovieResult> pageResult = tmdbService.topRated(language, page);
+
+            return ResponseEntity.ok(pageResult);
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body(e.getMessage());
+        }
+    }
 }
