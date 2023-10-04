@@ -8,12 +8,8 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import retrofit2.Call;
-import retrofit2.Response;
-import retrofit2.http.Query;
-
-import java.io.IOException;
 
 @RestController()
 @RequestMapping("api/v1/movie")
@@ -24,15 +20,13 @@ public class MovieController {
 
     @GetMapping("/popular")
     @Cacheable("popularMovies")
-    public ResponseEntity<?> popularMovies(@Query("language") String language, @Query("page") Integer page) {
+    public ResponseEntity<?> popularMovies(@RequestParam("language") String language, @RequestParam("page") Integer page) {
 
         try {
-            Call<TMDBPageResult<TMDBMovieResult>> httpCall = tmdbService.popularMovies(language, page);
+            TMDBPageResult<TMDBMovieResult> pageResult = tmdbService.popularMovies(language, page);
 
-            Response<TMDBPageResult<TMDBMovieResult>> response = httpCall.execute();
-
-            return ResponseEntity.ok(response.body());
-        } catch (IOException e) {
+            return ResponseEntity.ok(pageResult);
+        } catch (Exception e) {
             return ResponseEntity.internalServerError().body(e.getMessage());
         }
     }

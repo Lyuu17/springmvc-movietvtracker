@@ -1,0 +1,9 @@
+spring:
+  cloud:
+    openfeign:
+      client:
+        config:
+          tmdb:
+            url: https://api.themoviedb.org/3/
+            defaultRequestHeaders:
+              Authorization: Bearer ${tmdb.apikey}
