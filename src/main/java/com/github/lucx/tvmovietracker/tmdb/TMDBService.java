@@ -15,4 +15,7 @@ public interface TMDBService {
 
     @GetMapping("movie/top_rated")
     TMDBPageResult<TMDBMovieResult> topRated(@RequestParam("language") String language, @RequestParam("page") int page);
+
+    @GetMapping("movie/upcoming")
+    TMDBPageResult<TMDBMovieResult> upcoming(@RequestParam("language") String language, @RequestParam("page") int page);
 }

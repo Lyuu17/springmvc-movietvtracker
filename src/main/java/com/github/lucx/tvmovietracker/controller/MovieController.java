@@ -57,4 +57,17 @@ public class MovieController {
             return ResponseEntity.internalServerError().body(e.getMessage());
         }
     }
+
+    @GetMapping("/upcoming")
+    @Cacheable("upcoming")
+    public ResponseEntity<?> upcoming(@RequestParam("language") String language, @RequestParam("page") Integer page) {
+
+        try {
+            TMDBPageResult<TMDBMovieResult> pageResult = tmdbService.upcoming(language, page);
+
+            return ResponseEntity.ok(pageResult);
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body(e.getMessage());
+        }
+    }
 }
