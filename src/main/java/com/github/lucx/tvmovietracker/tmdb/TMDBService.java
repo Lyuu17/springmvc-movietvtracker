@@ -5,6 +5,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.Map;
+
 @FeignClient("tmdb")
 public interface TMDBService {
 
@@ -30,4 +32,12 @@ public interface TMDBService {
 
     @GetMapping("movie/{id}")
     TMDBMovieDetailsResult movieDetails(@PathVariable("id") int id);
+
+    /**
+     * SEARCH
+     */
+
+    @GetMapping("search/movie")
+    TMDBPageResult<TMDBMovieResult> movieSearch(@RequestParam("query") String query,
+                                                @RequestParam Map<String, String> options);
 }
