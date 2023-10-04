@@ -8,14 +8,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 public interface TMDBService {
 
     @GetMapping("movie/now_playing")
-    TMDBPageWithDatesResult<TMDBMovieResult> nowPlaying(@RequestParam("language") String language, @RequestParam("page") int page);
+    TMDBPageWithDatesResult<TMDBMovieResult> movieNowPlaying(@RequestParam("language") String language, @RequestParam("page") int page);
 
     @GetMapping("movie/popular")
-    TMDBPageResult<TMDBMovieResult> popularMovies(@RequestParam("language") String language, @RequestParam("page") int page);
+    TMDBPageResult<TMDBMovieResult> moviePopular(@RequestParam("language") String language, @RequestParam("page") int page);
 
     @GetMapping("movie/top_rated")
-    TMDBPageResult<TMDBMovieResult> topRated(@RequestParam("language") String language, @RequestParam("page") int page);
+    TMDBPageResult<TMDBMovieResult> movieTopRated(@RequestParam("language") String language, @RequestParam("page") int page);
 
     @GetMapping("movie/upcoming")
-    TMDBPageResult<TMDBMovieResult> upcoming(@RequestParam("language") String language, @RequestParam("page") int page);
+    TMDBPageResult<TMDBMovieResult> movieUpcoming(@RequestParam("language") String language, @RequestParam("page") int page);
 }

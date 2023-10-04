@@ -24,7 +24,7 @@ public class MovieController {
     public ResponseEntity<?> nowPlaying(@RequestParam("language") String language, @RequestParam("page") Integer page) {
 
         try {
-            TMDBPageWithDatesResult<TMDBMovieResult> pageWithDatesResult = tmdbService.nowPlaying(language, page);
+            TMDBPageWithDatesResult<TMDBMovieResult> pageWithDatesResult = tmdbService.movieNowPlaying(language, page);
 
             return ResponseEntity.ok(pageWithDatesResult);
         } catch (Exception e) {
@@ -33,11 +33,11 @@ public class MovieController {
     }
 
     @GetMapping("/popular")
-    @Cacheable("popularMovies")
-    public ResponseEntity<?> popularMovies(@RequestParam("language") String language, @RequestParam("page") Integer page) {
+    @Cacheable("popular")
+    public ResponseEntity<?> popular(@RequestParam("language") String language, @RequestParam("page") Integer page) {
 
         try {
-            TMDBPageResult<TMDBMovieResult> pageResult = tmdbService.popularMovies(language, page);
+            TMDBPageResult<TMDBMovieResult> pageResult = tmdbService.moviePopular(language, page);
 
             return ResponseEntity.ok(pageResult);
         } catch (Exception e) {
@@ -50,7 +50,7 @@ public class MovieController {
     public ResponseEntity<?> topRated(@RequestParam("language") String language, @RequestParam("page") Integer page) {
 
         try {
-            TMDBPageResult<TMDBMovieResult> pageResult = tmdbService.topRated(language, page);
+            TMDBPageResult<TMDBMovieResult> pageResult = tmdbService.movieTopRated(language, page);
 
             return ResponseEntity.ok(pageResult);
         } catch (Exception e) {
@@ -63,7 +63,7 @@ public class MovieController {
     public ResponseEntity<?> upcoming(@RequestParam("language") String language, @RequestParam("page") Integer page) {
 
         try {
-            TMDBPageResult<TMDBMovieResult> pageResult = tmdbService.upcoming(language, page);
+            TMDBPageResult<TMDBMovieResult> pageResult = tmdbService.movieUpcoming(language, page);
 
             return ResponseEntity.ok(pageResult);
         } catch (Exception e) {
